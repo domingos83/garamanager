@@ -339,7 +339,7 @@ function ImportRow({ phone, onAdd }) {
 // ══════ CLIENT ════════════════════════════════════════════════════
 function ClientTab({ docs, stock, phoneDocs }) {
   const [form, setForm] = useState({
-    budget:"", gb:"", minuti:"illimitati", portabilita:"si", tipo:"privato",
+    budget:"", gb:"", minuti:"illimitati", portabilita:"si", gestoreAttuale:"", tipo:"privato",
     vuoleTelefono:"no", budgetTel:"", pagamentoTel:"rid", note:"",
   });
   const [results, setResults] = useState(null);
@@ -372,6 +372,7 @@ PROFILO CLIENTE:
 - GB: ${form.gb||"non specificato"}
 - Minuti: ${form.minuti}
 - Porta numero: ${form.portabilita==="si"?"SÌ":"NO"}
+- Gestore attuale: ${form.portabilita==="si" && form.gestoreAttuale ? form.gestoreAttuale : "non specificato"}
 - Tipo: ${form.tipo}
 - Vuole telefono: ${wantsPhone?"SÌ":"NO"}
 ${wantsPhone?`- Budget telefono: ${form.budgetTel?"€"+form.budgetTel:"non specificato"}
@@ -445,6 +446,24 @@ Per telefono_abbinato usa: {"brand":"...","model":"...","color":"...","gb":"..."
                   <option value="no">No, nuovo numero</option>
                 </select>
               </Field>
+              {form.portabilita === "si" && (
+                <Field label="Gestore attuale" style={{gridColumn:"1/-1"}}>
+                  <select className="fs" value={form.gestoreAttuale} onChange={e=>sf("gestoreAttuale",e.target.value)}>
+                    <option value="">— seleziona —</option>
+                    <option value="Iliad">Iliad</option>
+                    <option value="TIM">TIM</option>
+                    <option value="Vodafone">Vodafone</option>
+                    <option value="WindTre">WindTre</option>
+                    <option value="Very Mobile">Very Mobile</option>
+                    <option value="Ho Mobile">Ho Mobile</option>
+                    <option value="Fastweb Mobile">Fastweb Mobile</option>
+                    <option value="CoopVoce">CoopVoce</option>
+                    <option value="Lycamobile">Lycamobile</option>
+                    <option value="Spusu">Spusu</option>
+                    <option value="Altro MVNO">Altro MVNO</option>
+                  </select>
+                </Field>
+              )}
               <Field label="Tipo cliente" style={{gridColumn:"1/-1"}}>
                 <select className="fs" value={form.tipo} onChange={e=>sf("tipo",e.target.value)}>
                   <option value="privato">Privato</option>
